@@ -95,10 +95,11 @@ class HomeScreen extends React.Component {
           </View>
           <View style={page.check}>
             {/* 門市位置 */}
+            <Text>這裡是門市</Text>
             {/*<Store/>*/}
           </View>
           <View style={page.notice}>
-            
+            <Text>這裡是通知</Text>
           </View>
           <View style={page.member}>
             {/* 會員頁面 */}
