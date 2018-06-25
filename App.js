@@ -36,6 +36,8 @@ import Best from './screen/Best';
 import ForgetScreen from './screen/ForgetScreen';
 import Store from './screen/Store';
 import Notice from './screen/Notice';
+import QrScannerScreen from './screen/QrScannerScreen';
+
 
 
 const instructions = Platform.select({
@@ -90,8 +92,34 @@ class HomeScreen extends React.Component {
             {/* 門市位置 */}
             <Store/>
           </View>
-          <View>
-            <Notice/>
+          <View style={page.notice}>
+            {/*會員通知頁面*/}
+            {/*第二層無法轉跳*/}
+            {/*<Notice/>*/}
+            
+              <Text style={{ fontSize: 30 }}>2018 集點活動</Text>
+              <Image source={require('./assets/banner-72.png')} style={{ width: Dimensions.get('window').width, height: 130,resizeMode: Image.resizeMode.stretch }} />
+              <Text />
+              <Button
+                buttonStyle={{
+                  backgroundColor: 'white',
+                  width: 150,
+                  height: 50,
+                  borderColor: '#6E6661',
+                  borderWidth: 1,
+                  borderRadius: 5,
+                  
+                }}
+                title="掃描集點"
+                fontSize={20}
+                color="#6E6661"
+                
+                // 按鈕
+                onPress={() => this.props.navigation.navigate('QrScanner')}
+              />
+              <Text>歷史紀錄</Text>
+
+
           </View>
           <View style={page.member}>
             {/* 會員頁面 */}
@@ -173,7 +201,7 @@ class HomeScreen extends React.Component {
   const RootStack = createStackNavigator(
     {
       Home: HomeScreen, //首頁、排行、門市、通知、會員5個分頁
-      //Scanner: ScannerScreen, //掃描頁面
+      QrScanner: QrScannerScreen, //掃描頁面
       Login: LoginScreen, //會員登入
       Register: RegisterScreen, //註冊說明
       Person: PersonScreen, //註冊輸入個資
