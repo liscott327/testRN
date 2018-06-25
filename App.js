@@ -34,7 +34,7 @@ import RegisterScreen from './screen/RegisterScreen';
 import Facebook from './screen/Facebook';
 import Best from './screen/Best';
 import ForgetScreen from './screen/ForgetScreen';
-//import Store from './screen/Store';
+import Store from './screen/Store';
 
 
 
@@ -53,19 +53,19 @@ class HomeScreen extends React.Component {
   //   headerTitle: <LogoTitle/>,
   //   headerStyle: {height: 42 ,backgroundColor:'#DCDDDD'} //頂端列高度
   // };
-  state = {
-    text: null,
-  };
+  // state = {
+  //   text: null,
+  // };
 
-  // 在渲染之後觸發一次
-  componentDidMount() {
+  // // 在渲染之後觸發一次
+  // componentDidMount() {
     
-  }
+  // }
   
-  // 在渲染之前觸發一次
-  componentWillMount() {
+  // // 在渲染之前觸發一次
+  // componentWillMount() {
     
-  }
+  // }
 
   //按下按鈕後彈出視窗
   onPressButton() {
@@ -73,13 +73,6 @@ class HomeScreen extends React.Component {
   }
 
   render() {
-
-    let text = 'Waiting..';
-    if (this.state.errorMessage) {
-      text = this.state.errorMessage;
-    } else if (this.state.location) {
-      text = JSON.stringify(this.state.location);
-    }
 
     return (
 
@@ -93,10 +86,10 @@ class HomeScreen extends React.Component {
             {/* 排行榜圖片 */}
             <Best/>
           </View>
-          <View style={page.check}>
+          <View style={page.store}>
             {/* 門市位置 */}
-            <Text>這裡是門市</Text>
-            {/*<Store/>*/}
+            {/*<Text>這裡是門市</Text>*/}
+            <Store/>
           </View>
           <View style={page.notice}>
             <Text>這裡是通知</Text>
@@ -142,7 +135,7 @@ class HomeScreen extends React.Component {
               borderRadius={10}
               fontSize={15}
               title="忘記密碼"
-              //onPress={() => this.props.navigation.navigate('Forget')}
+              onPress={() => this.props.navigation.navigate('Forget')}
             /> 
           </View>
         </IndicatorViewPager>
@@ -152,7 +145,7 @@ class HomeScreen extends React.Component {
   }
   renderTabIndicator() {
     // 首頁、排行榜、門市查詢、通知、會員
-    // index、best、check、notice、member
+    // index、best、store、notice、member
     // * 下方按鈕色碼 (灰色)#595656 (綠色)#B4B51F
     const tabs = [{
       text: '首頁',
@@ -164,8 +157,8 @@ class HomeScreen extends React.Component {
       selectedIconSource: require('./assets/best_btn_click.png'),
     }, {
       text: '門市',
-      iconSource: require('./assets/check_btn.png'),
-      selectedIconSource: require('./assets/check_btn_click.png'),
+      iconSource: require('./assets/store_btn.png'),
+      selectedIconSource: require('./assets/store_btn_click.png'),
     }, {
       text: '通知',
       iconSource: require('./assets/notice_btn.png'),
@@ -180,13 +173,14 @@ class HomeScreen extends React.Component {
 }
   const RootStack = createStackNavigator(
     {
-      Home: HomeScreen,
-      //Scanner: ScannerScreen,
-      Login: LoginScreen,
-      Register: RegisterScreen,
-      Person: PersonScreen,
-      Forget: ForgetScreen,
-      
+      Home: HomeScreen, //首頁、排行、門市、通知、會員5個分頁
+      //Scanner: ScannerScreen, //掃描頁面
+      Login: LoginScreen, //會員登入
+      Register: RegisterScreen, //註冊說明
+      Person: PersonScreen, //註冊輸入個資
+      Forget: ForgetScreen, //忘記密碼
+      Store: Store, //門市位置
+
     },
     {
       initialRouteName: 'Home',
@@ -246,7 +240,7 @@ const styles = StyleSheet.create({
 });
 
 
-// 頁面樣式index、best、check、notice、member
+// 頁面樣式index、best、store、notice、member
 const page = StyleSheet.create({
   index: {
     flex: 1,
@@ -260,9 +254,9 @@ const page = StyleSheet.create({
     backgroundColor: '#AED49D',
     // resizeMode :'center'
   },
-  check: {
-    // alignItems: 'center',
-    // justifyContent: 'center',
+  stroe: {
+    alignItems: 'center',
+    justifyContent: 'center',
     // backgroundColor:'#1AA094',
   },
   notice: {

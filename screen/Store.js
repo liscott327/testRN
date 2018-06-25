@@ -16,10 +16,9 @@ import {
   TextInput,
   AsyncStorage,
 } from 'react-native';
-import { createStackNavigator } from 'react-navigation'; 
-import { PagerTabIndicator, IndicatorViewPager } from 'rn-viewpager';
+
 import { Button, Header, Icon, ListItem, CheckBox  } from 'react-native-elements';
-import { BarCodeScanner, Permissions, MapView , Location , Constants , Expo, SQLite,  } from 'expo';
+
 const list = [
   {
     name: '988 公園店',
@@ -66,66 +65,66 @@ const list = [
 ];
 export default class Store extends React.Component {
   //  門市畫面
-  state = {
-    mapRegion: { 
-      latitude: 24.175400, 
-      longitude: 120.690504, 
-      latitudeDelta: 0.005, 
-      longitudeDelta: 0.005, 
-    },
-    locationResult: null,
-    location: {coords: { latitude: 24.175400, longitude: 120.690504}},
-    text: null,
-  };
-  componentDidMount() {
-    this._getLocationAsync();
-  }
-  componentWillMount() {
-    if (Platform.OS === 'android' && !Constants.isDevice) {
-      this.setState({
-        errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
-      });
-    } else {
-      this._getLocationAsync();
-    }
+  // state = {
+  //   mapRegion: { 
+  //     latitude: 24.175400, 
+  //     longitude: 120.690504, 
+  //     latitudeDelta: 0.005, 
+  //     longitudeDelta: 0.005, 
+  //   },
+  //   locationResult: null,
+  //   location: {coords: { latitude: 24.175400, longitude: 120.690504}},
+  //   text: null,
+  // };
+  // componentDidMount() {
+  //   this._getLocationAsync();
+  // }
+  // componentWillMount() {
+  //   if (Platform.OS === 'android' && !Constants.isDevice) {
+  //     this.setState({
+  //       errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
+  //     });
+  //   } else {
+  //     this._getLocationAsync();
+  //   }
     
-  }
+  // }
 
-  _handleMapRegionChange = mapRegion => {
-    this.setState({ mapRegion });
-  };
+  // _handleMapRegionChange = mapRegion => {
+  //   this.setState({ mapRegion });
+  // };
 
-  _getLocationAsync = async () => {
-    let { status } = await Permissions.askAsync(Permissions.LOCATION);
-    if (status !== 'granted') {
-      this.setState({
-        locationResult: '讀取位置的權限被拒絕',
-        location,
-      });
-    }
+  // _getLocationAsync = async () => {
+  //   let { status } = await Permissions.askAsync(Permissions.LOCATION);
+  //   if (status !== 'granted') {
+  //     this.setState({
+  //       locationResult: '讀取位置的權限被拒絕',
+  //       location,
+  //     });
+  //   }
 
-    let location = await Location.getCurrentPositionAsync({});
-    this.setState({ locationResult: JSON.stringify(location), location, });
-  };
+  //   let location = await Location.getCurrentPositionAsync({});
+  //   this.setState({ locationResult: JSON.stringify(location), location, });
+  // };
   render() {
     return (
       <View style={{ flex:1 }}>
-        <MapView
-          style={{ flex:1 }}
-          region={{ 
-            latitude: this.state.location.coords.latitude, 
-            longitude: this.state.location.coords.longitude, 
-            latitudeDelta: 0.005, 
-            longitudeDelta: 0.005 
-          }}
-          //onRegionChange={this._handleMapRegionChange}//鎖定不讓使用者移動
-        >
-          <MapView.Marker
-            coordinate={this.state.location.coords}
-            title="我的位置"
-            //description="Some description"
-          />
-        </MapView>
+        {/* <MapView
+        //   style={{ flex:1 }}
+        //   region={{ 
+        //     latitude: this.state.location.coords.latitude, 
+        //     longitude: this.state.location.coords.longitude, 
+        //     latitudeDelta: 0.005, 
+        //     longitudeDelta: 0.005 
+        //   }}
+        //   //onRegionChange={this._handleMapRegionChange}//鎖定不讓使用者移動
+        // >
+        //   <MapView.Marker
+        //     coordinate={this.state.location.coords}
+        //     title="我的位置"
+        //     //description="Some description"
+        //   />
+        // </MapView>*/}
         {/* 塞入itemlist做附近店面列表*/}  
         <ScrollView style={{flex: 1}}>
           {
