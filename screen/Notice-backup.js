@@ -8,9 +8,9 @@ import {
   TextInput,
 } from 'react-native';
 import { Button  } from 'react-native-elements';
-
+import { SQLite,  } from 'expo';
 const { height, width } = Dimensions.get('window');
-//const db = SQLite.openDatabase('db.db');
+const db = SQLite.openDatabase('db.db');
 class Items extends React.Component {
   state = {
     items: null,
@@ -64,7 +64,7 @@ export default class Notice extends React.Component {
   }
   render() {
     return (
-      <View style={{alignItems: 'center'}}>
+      <View>
         <Text style={{ fontSize: 30 }}>2018 集點活動</Text>
         <Image source={require('../assets/banner-72.png')} style={{ width: Dimensions.get('window').width, height: 130,resizeMode: Image.resizeMode.stretch }} />
         <Text />
@@ -84,7 +84,7 @@ export default class Notice extends React.Component {
           onPress={() => this.props.navigation.navigate('Scanner')}
         />
         <Text>歷史紀錄</Text>
-        {/* <View style={{flexDirection: 'row', }}>
+        <View style={{flexDirection: 'row', }}>
           <TextInput
             style={{
               flex: 1,
@@ -131,7 +131,7 @@ export default class Notice extends React.Component {
             />
             
           </View>
-              </ScrollView> */}
+        </ScrollView> 
       </View>
     );
   }

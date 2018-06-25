@@ -35,7 +35,7 @@ import Facebook from './screen/Facebook';
 import Best from './screen/Best';
 import ForgetScreen from './screen/ForgetScreen';
 import Store from './screen/Store';
-
+import Notice from './screen/Notice';
 
 
 const instructions = Platform.select({
@@ -88,11 +88,10 @@ class HomeScreen extends React.Component {
           </View>
           <View style={page.store}>
             {/* 門市位置 */}
-            {/*<Text>這裡是門市</Text>*/}
             <Store/>
           </View>
-          <View style={page.notice}>
-            <Text>這裡是通知</Text>
+          <View>
+            <Notice/>
           </View>
           <View style={page.member}>
             {/* 會員頁面 */}
