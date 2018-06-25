@@ -47,3 +47,7 @@ const styles = StyleSheet.create({
     }
 })
 ```
+### 參考元件
+[ReactNative QR Code](https://medium.com/@adrawgill/reactnative-qr-code-f6bca33704f2)
+
+[react-native-qrcode-scanner](https://github.com/moaazsidat/react-native-qrcode-scanner)
