@@ -47,6 +47,71 @@ const styles = StyleSheet.create({
     }
 })
 ```
+### 錯誤紀錄
+
+```
+npm install react-native-camera --save
+react-native link react-native-camera
+```
+會無法啟動專案修改路徑中的程式碼
+
+android/build.gradle
+```JSX
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    repositories {
+        jcenter()
+        google()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.0.1'
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        mavenLocal()
+        jcenter()
+        maven {
+            // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+            url "$rootDir/../node_modules/react-native/android"
+        }
+        google()
+    }
+}
+
+
+subprojects {
+  project.configurations.all {
+     resolutionStrategy.eachDependency { details ->
+        if (details.requested.group == 'com.android.support'
+              && !details.requested.name.contains('multidex') ) {
+           details.useVersion "27.1.0"
+        }
+     }
+  }
+}
+```
+android/gradle/wrapper/gradle-wrapper.properties
+```JSX
+distributionUrl=https\://services.gradle.org/distributions/gradle-4.1-all.zip
+```
+
+android/app/build.gradle
+```JSX
+android{
+  compileSdkVersion 27
+  buildToolsVersion "27.0.0"
+  
+  .....
+}
+```
+[資料來源]https://github.com/react-native-community/react-native-camera/issues/1530()
+
 ### 參考元件
 [ReactNative QR Code](https://medium.com/@adrawgill/reactnative-qr-code-f6bca33704f2)
 
