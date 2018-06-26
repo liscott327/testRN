@@ -37,6 +37,7 @@ import ForgetScreen from './screen/ForgetScreen';
 import Store from './screen/Store';
 import Notice from './screen/Notice';
 import QrScannerScreen from './screen/QrScannerScreen';
+import { createStore } from "redux";
 
 
 

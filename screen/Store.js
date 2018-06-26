@@ -16,7 +16,7 @@ import {
   TextInput,
   AsyncStorage,
 } from 'react-native';
-
+import MapView from 'react-native-maps';
 import { Button, Header, Icon, ListItem, CheckBox  } from 'react-native-elements';
 
 const list = [
@@ -109,7 +109,9 @@ export default class Store extends React.Component {
   render() {
     return (
       <View style={{ flex:1 }}>
-        {/* <MapView
+        
+      
+      {/* <MapView
         //   style={{ flex:1 }}
         //   region={{ 
         //     latitude: this.state.location.coords.latitude, 
