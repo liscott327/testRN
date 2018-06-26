@@ -5,7 +5,9 @@ import {
   View,
   TouchableOpacity,
   Linking,
+  Alert,
 } from 'react-native';
+import { Button } from 'react-native-elements';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import LogoTitle from './LogoTitle';
 
@@ -17,9 +19,12 @@ export default class QrScannerScreen extends React.Component {
     // headerLeft:  <Icon name={'chevron-left'} onPress={() => console.log('返回')} />,
   };
   onSuccess(e) {
-    Linking
-      .openURL(e.data)
-      .catch(err => console.error('An error occured', err));
+    Alert.alert(e.data);//跳出視窗(僅能顯示前幾個字)
+    console.log(e.data);//印出所有值
+    this.props.navigation.navigate('Home');
+    // Linking
+    //   .openURL(e.data)
+    //   .catch(err => console.error('An error occured', err));
   }
 
   
@@ -30,12 +35,14 @@ export default class QrScannerScreen extends React.Component {
         onRead={this.onSuccess.bind(this)}
         topContent={
           <Text style={styles.centerText}>
-            Go to <Text style={styles.textBold}>wikipedia.org/wiki/QR_code</Text> on your computer and scan the QR code.
+            <Text style={styles.textBold}>請對準發票左邊QRCode</Text>
           </Text>
         }
         bottomContent={
-          <TouchableOpacity style={styles.buttonTouchable}>
-            <Text style={styles.buttonText}>OK. Got it!</Text>
+          <TouchableOpacity 
+            style={styles.buttonTouchable}
+            onPress={() => this.props.navigation.navigate('Home')}>
+            <Text style={styles.buttonText}>返回</Text>
           </TouchableOpacity>
         }
       />
