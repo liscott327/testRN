@@ -21,6 +21,8 @@ import {
   Platform,
   TextInput,
   AsyncStorage,
+  FlatList,  
+  Keyboard,
 } from 'react-native';
 import { createStackNavigator } from 'react-navigation'; 
 import { PagerTabIndicator, IndicatorViewPager } from 'rn-viewpager';
@@ -49,8 +51,60 @@ const instructions = Platform.select({
 });
 
 const { height, width } = Dimensions.get('window'); // 裝置長寬
-
+const isAndroid = Platform.OS == "android";
+const viewPadding = 10;
 class HomeScreen extends React.Component {
+  state = {
+    tasks: [],
+    text: ""
+  };
+
+  changeTextHandler = text => {
+    this.setState({ text: text });
+  };
+  addTask = () => {
+    let notEmpty = this.state.text.trim().length > 0;
+
+    if (notEmpty) {
+      this.setState(
+        prevState => {
+          let { tasks, text } = prevState;
+          return {
+            tasks: tasks.concat({ key: tasks.length, text: text }),
+            text: ""
+          };
+        },
+        () => Tasks.save(this.state.tasks)
+      );
+    }
+  };
+
+  deleteTask = i => {
+    this.setState(
+      prevState => {
+        let tasks = prevState.tasks.slice();
+
+        tasks.splice(i, 1);
+
+        return { tasks: tasks };
+      },
+      () => Tasks.save(this.state.tasks)
+    );
+  };
+
+  componentDidMount() {
+    Keyboard.addListener(
+      isAndroid ? "keyboardDidShow" : "keyboardWillShow",
+      e => this.setState({ viewMargin: e.endCoordinates.height + viewPadding })
+    );
+
+    Keyboard.addListener(
+      isAndroid ? "keyboardDidHide" : "keyboardWillHide",
+      () => this.setState({ viewMargin: viewPadding })
+    );
+
+    Tasks.all(tasks => this.setState({ tasks: tasks || [] }));
+  }
   // static navigationOptions = {
   //   // headerTitle instead of title
   //   headerTitle: <LogoTitle/>,
@@ -119,7 +173,33 @@ class HomeScreen extends React.Component {
                 onPress={() => this.props.navigation.navigate('QrScanner')}
               />
               <Text>歷史紀錄</Text>
-
+              <View
+        style={[styles.container, { paddingBottom: this.state.viewMargin }]}
+      >
+        <FlatList
+          style={styles.list}
+          data={this.state.tasks}
+          renderItem={({ item, index }) =>
+            <View>
+              <View style={styles.listItemCont}>
+                <Text style={styles.listItem}>
+                  {item.text}
+                </Text>
+                <Button title="X" onPress={() => this.deleteTask(index)} />
+              </View>
+              <View style={styles.hr} />
+            </View>}
+        />
+        <TextInput
+          style={styles.textInput}
+          onChangeText={this.changeTextHandler}
+          onSubmitEditing={this.addTask}
+          value={this.state.text}
+          placeholder="Add Tasks"
+          returnKeyType="done"
+          returnKeyLabel="done"
+        />
+      </View>
 
           </View>
           <View style={page.member}>
@@ -171,6 +251,7 @@ class HomeScreen extends React.Component {
     );
     
   }
+  
   renderTabIndicator() {
     // 首頁、排行榜、門市查詢、通知、會員
     // index、best、store、notice、member
@@ -199,6 +280,24 @@ class HomeScreen extends React.Component {
     return <PagerTabIndicator tabs={tabs} />;
   }
 }
+let Tasks = {
+  convertToArrayOfObject(tasks, callback) {
+    return callback(
+      tasks ? tasks.split("||").map((task, i) => ({ key: i, text: task })) : []
+    );
+  },
+  convertToStringWithSeparators(tasks) {
+    return tasks.map(task => task.text).join("||");
+  },
+  all(callback) {
+    return AsyncStorage.getItem("TASKS", (err, tasks) =>
+      this.convertToArrayOfObject(tasks, callback)
+    );
+  },
+  save(tasks) {
+    AsyncStorage.setItem("TASKS", this.convertToStringWithSeparators(tasks));
+  }
+};
   const RootStack = createStackNavigator(
     {
       Home: HomeScreen, //首頁、排行、門市、通知、會員5個分頁
@@ -245,22 +344,47 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: '#000',
   },
-  buttonText: {
-    fontSize: 21,
-    color: 'rgb(0,122,255)',
+  list: {
+    width: "100%"
   },
-  buttonTouchable: {
-    padding: 16,
+  listItem: {
+    paddingTop: 2,
+    paddingBottom: 2,
+    fontSize: 18
   },
-  headerImg: {
-    // 最上面的那條
-    height: 34,
-    width: 153,
-    // backgroundColor:'#F6F6F6',
-    //  alignItems: 'center',
-    alignItems: 'center',
-    marginLeft: '27%', // 頂端列圖片置中
+  hr: {
+    height: 1,
+    backgroundColor: "gray"
   },
+  listItemCont: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between"
+  },
+  textInput: {
+    height: 40,
+    paddingRight: 10,
+    paddingLeft: 10,
+    borderColor: "gray",
+    borderWidth: isAndroid ? 0 : 1,
+    width: "100%"
+  },
+  // buttonText: {
+  //   fontSize: 21,
+  //   color: 'rgb(0,122,255)',
+  // },
+  // buttonTouchable: {
+  //   padding: 16,
+  // },
+  // headerImg: {
+  //   // 最上面的那條
+  //   height: 34,
+  //   width: 153,
+  //   // backgroundColor:'#F6F6F6',
+  //   //  alignItems: 'center',
+  //   alignItems: 'center',
+  //   marginLeft: '27%', // 頂端列圖片置中
+  // },
   header: {
     flex: 1,
     backgroundColor: '#F6F6F6',
