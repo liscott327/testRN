@@ -1,7 +1,7 @@
 package com.testrn;
 
 import android.app.Application;
-
+//import com.airbnb.android.react.maps.MapsPackage;
 import com.facebook.react.ReactApplication;
 import org.reactnative.camera.RNCameraPackage;
 import com.facebook.react.ReactNativeHost;
@@ -25,6 +25,7 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
             new RNCameraPackage()
+            //new MapsPackage() //地圖用套件
       );
     }
 
