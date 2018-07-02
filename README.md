@@ -116,3 +116,5 @@ android{
 [ReactNative QR Code](https://medium.com/@adrawgill/reactnative-qr-code-f6bca33704f2)
 
 [react-native-qrcode-scanner](https://github.com/moaazsidat/react-native-qrcode-scanner)
+
+[to do list](https://snack.expo.io/ryNAHKnPW)

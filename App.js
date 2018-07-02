@@ -173,33 +173,31 @@ class HomeScreen extends React.Component {
                 onPress={() => this.props.navigation.navigate('QrScanner')}
               />
               <Text>歷史紀錄</Text>
-              <View
-        style={[styles.container, { paddingBottom: this.state.viewMargin }]}
-      >
-        <FlatList
-          style={styles.list}
-          data={this.state.tasks}
-          renderItem={({ item, index }) =>
-            <View>
-              <View style={styles.listItemCont}>
-                <Text style={styles.listItem}>
-                  {item.text}
-                </Text>
-                <Button title="X" onPress={() => this.deleteTask(index)} />
-              </View>
-              <View style={styles.hr} />
-            </View>}
-        />
-        <TextInput
-          style={styles.textInput}
-          onChangeText={this.changeTextHandler}
-          onSubmitEditing={this.addTask}
-          value={this.state.text}
-          placeholder="Add Tasks"
-          returnKeyType="done"
-          returnKeyLabel="done"
-        />
-      </View>
+              <View style={[styles.container, { paddingBottom: this.state.viewMargin }]}>
+                  <FlatList
+                    style={styles.list}
+                    data={this.state.tasks}
+                    renderItem={({ item, index }) =>
+                      <View>
+                        <View style={styles.listItemCont}>
+                          <Text style={styles.listItem}>
+                            {item.text}
+                          </Text>
+                          <Button title="X" onPress={() => this.deleteTask(index)} />
+                        </View>
+                        <View style={styles.hr} />
+                      </View>}
+                  />
+                  <TextInput
+                    style={styles.textInput}
+                    onChangeText={this.changeTextHandler}
+                    onSubmitEditing={this.addTask}
+                    value={this.state.text}
+                    placeholder="Add Tasks"
+                    returnKeyType="done"
+                    returnKeyLabel="done"
+                  />
+                </View>
 
           </View>
           <View style={page.member}>
